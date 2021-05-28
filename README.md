@@ -1,5 +1,5 @@
 # Minesweeper
-terminal based minesweeper game coded in C++.
+> terminal based minesweeper game coded in C++.
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
@@ -16,13 +16,6 @@ Project is created with:
 * Turbo C++ 4.0 Windows 7 Windows 8 64Bit Version
 	
 ## Setup
-To run this project, install it locally using npm:
-
-```
-$ cd ../lorem
-$ npm install
-$ npm start
-```
 
 ## How to play
 
