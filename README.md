@@ -3,7 +3,6 @@
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
-* [Setup](#setup)
 * [How to play](#how-to-play)
 * [Understanding code](#understanding-code)
 
@@ -14,9 +13,13 @@ Flag all the locations of mines to win the game but, be aware. If any mine explo
 ## Technologies
 Project is created with:
 * Turbo C++ 4.0 Windows 7 Windows 8 64Bit Version
-	
-## Setup
 
 ## How to play
+When you will open the game it will display the general info of the game on the _Introduction_ page and will ask you the size of board you want play on.
+
+Back to [Table of contents](#table-of-content)
 
 ## Understanding code
+
+
+Back to [Table of contents](#table-of-content)
