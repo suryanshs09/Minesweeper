@@ -1,5 +1,5 @@
 # Minesweeper
-> terminal based minesweeper game coded in C++.
+> Terminal based minesweeper game coded in C++.
 ## Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
