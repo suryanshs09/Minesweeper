@@ -17,9 +17,9 @@ Project is created with:
 ## How to play
 When you will open the game it will display the general info of the game on the _Introduction_ page and will ask you the size of board you want play on.
 
-Back to [Table of contents](#table-of-content)
+Back to [Table of contents](#table-of-contents)
 
 ## Understanding code
 
 
-Back to [Table of contents](#table-of-content)
+Back to [Table of contents](#table-of-contents)
