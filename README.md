@@ -16,6 +16,11 @@ Project is created with:
 
 ## How to play
 When you will open the game it will display the general info of the game on the _Introduction_ page and will ask you the size of board you want play on.
+> _Avoid choosing size of board more than 10 so that board get display properly_
+
+After you provide the size of board let's say suppose **`n`** then the board will be created of dimensions **`n x n`** and the 
+
+**`20% of total n x n cells of board will contain Mines at random locations`**
 
 Back to [Table of contents](#table-of-contents)
 
