@@ -74,58 +74,87 @@ Back to [Table of contents](#table-of-contents)
 
 ## Understanding code
 The game is coded in C++ programming language without any classes and object. The complete is coded keeping in mind the _Procedural Oriented Programming_ pradigm using only functions.
+### Functions and their description:
+* The function which show the general-info of the game and takes input of the size of the board from the player.
 ```cpp
 int introduction();
-int scoreCalculator(char**, char**, int);
-void showMines(char**, char**, int, int, int);
-int submit(char**, char**, int, int, int);
-void undoFlag(char**, int, int, int);
-void flagLocation(char**, int, int, int);
-void foundZero(int, int, char**, char**, int);
-int openLocation(char**, char**, int, int, int);
-void displayAnyBoard(char**, int);
-int countFlags(char**, int);
-int countMines(char**, int);
-void createDisplayBoard(char**, int);
-void createHints(int, int, char**, int);
-void createMines(char**, int, int);
-void createLogicBoard(char**, int);
+```
+* The function to initialize the board passed in the parameter and set the default value of each cell as **`0`**.
+```cpp 
 void initialBoard(char**, int);
+```
+* The function to set each cell value of the display-board to **`.`** character.
+```cpp
+void createDisplayBoard(char**, int);
+```
+* The function to create the logic-board in which the amount of mines to be created are set. 
+```cpp
+void createLogicBoard(char**, int);
+```
+* The function to create mines at random locations in the logic-board.
+```cpp
+void createMines(char**, int, int);
+```
+* The function to create the hints around the mines.
+```cpp
+void createHints(int, int, char**, int);
+```
+* The function to disply the board which is passed in the parameter.
+```cpp
+void displayAnyBoard(char**, int);
+```
+* The function which return the current amount of flags in the display board.
+```cpp
+int countFlags(char**, int);
+```
+* The function which return the total amount of mines in the logic-board.
+```cpp
+int countMines(char**, int);
+```
+* The function to open a cell and update display-board according to the result of comparision between logic-board and display-board.
+```cpp
+int openLocation(char**, char**, int, int, int);
+```
+* The function to open locations recursivly around the current cell if the cell has value 0.
+```cpp
+void foundZero(int, int, char**, char**, int);
+```
+* The function to flag a location on the display-board.
+```cpp
+void flagLocation(char**, int, int, int);
+```
+* The function to remove a flag from a flagged location.
+```cpp
+void undoFlag(char**, int, int, int);
+```
+* The function to stop the game either when you win the game or when you decide to quit in between.
+```cpp
+int submit(char**, char**, int, int, int);
+```
+* The function to claculate the score scored by the player in the game after submission.
+```cpp
+int scoreCalculator(char**, char**, int);
+```
+* the function to display all the mines after the player hits a mine while opening a location.
+```cpp
+void showMines(char**, char**, int, int, int);
 ```
 The logic of the code is simple there is two-dimensional array of character used in the game board, but the unique thing here is that there are actually two boards in the play. One which show us the output the _`display-board`_. The other which contain the vlue of the locations which is hidden from us the _`logic-board`_. Whenever we try to perform any opertion like open or flag a location, the display-borad is the one which gets updated and it updates according to the value which is present at the same location in the logic-board.
 
+In the main function where the actual playing of the game happens ther is a _infinite while loop_ which can only be stoped when the player surrenders or wins the game.
+In each iteration of the loop the updated display-board get displayed, the number of moves get incremented, the current number of flags on the display board gets updated, player chooses the opration and the condition for gameover is checked.
+If the player wins/surrenders/loses the score is calculated and the result is decleared accordingly.
 ```cpp
 void main(){
-	clrscr();
-	int n, mcount, fcount, choice, lost=0, gameover=0, score, moves=0;
-	
-	n = introduction();
-	
-	char** logicBoard = new char*[n];
-	char** displayBoard = new char*[n];
-	for(int i=0; i<n; i++){
-		logicBoard[i] = new char[n];
-		displayBoard[i] = new char[n];
-	}
-	
-	initialBoard(logicBoard, n);
-	initialBoard(displayBoard, n);
-	
-	createLogicBoard(logicBoard, n);
-	createDisplayBoard(displayBoard, n);
-	
+	// initialize variables and take n
+	// initialize & create logic-board and display-board of n x n
 	mcount = countMines(logicBoard, n);
-
 	while(!gameover && !lost){
 		clrscr();
 		fcount = countFlags(displayBoard, n);
-	
-		cout<<"\t\t\t\tM I N E S W E E P E R\n\n";
 		cout<<" Mines = "<<mcount<<"\t"<<" Flags = "<<fcount<<"\n";
 		displayAnyBoard(displayBoard, n);
-		cout<<"\n Press 1 to open a position\n Press 2 to Flag a position\n Press 3 to Undo Flag\n Press 4 to Submit\n\n CHOICE: ";
-		cin>>choice;
-		
+		// provide options
 		switch(choice){
 			case 1:
 				lost = openLocation(logicBoard, displayBoard, n, mcount, fcount);
@@ -145,7 +174,6 @@ void main(){
 				break;
 			default:
 				cout<<"\n\t\tEnter a valid Choice!!\n\t\tPress Enter to continue...";
-				getch();
 				break;
 		}
 		moves++;
@@ -153,17 +181,11 @@ void main(){
 	
 	if(lost == 1){
 		score = scoreCalculator(logicBoard, displayBoard, n);
-		clrscr();
-		cout<<"\n\n\n\n\n\t\t\t\t  GAME OVER\n\n";
-		cout<<"\t\t\tThank you for playing the game\n\t\t\t\t  Moves: "<<moves<<"\n\t\t\t\tYou scored: "<<score<<"\n\n\t\t\t    Press Enter to Exit...";
-		getch();
+		// gameover lost message
 	}
 	if(gameover == 1){
 		score = scoreCalculator(logicBoard, displayBoard, n);
-		clrscr();
-		cout<<"\n\n\n\n\n\t\t\t\t  GAME OVER\n\n";
-		cout<<"\t\t\tCongrtulations!! You won the game\n\t\t\t\t  Moves: "<<moves<<"\n\t\t\t\tYou scored: "<<score<<"\n\n\t\t\t    Press Enter to Exit...";
-		getch();
+		// gameover win message
 	}
 }
 ```
