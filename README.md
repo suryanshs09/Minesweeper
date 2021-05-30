@@ -58,7 +58,7 @@ it will open all the locations around it until it find the locations containing 
 **_If you Press 2:_**
 
 the flag location option will get selected and the game will ask us to enter the row and column number of the cell we want to flag. We can only flag a location which was not opened or flagged previously and the entered row and column number is valid.
-After you flag a location it's character will change from hidden to flag characterno matter what is the valus of the location.
+After you flag a location it's character will change from hidden to flag character no matter what is the valus of the location.
 > _Each time you flag a location the flag count will be incremented but be aware don't flag a location unnecessarily. The flag count is limited to number of mines and you cannot flag more than the number of mines present in the board._
 
 **_If you Press 3:_**
@@ -73,7 +73,100 @@ The submit operation will get selected. you should select it only when you want 
 Back to [Table of contents](#table-of-contents)
 
 ## Understanding code
+The game is coded in C++ programming language without any classes and object. The complete is coded keeping in mind the _Procedural Oriented Programming_ pradigm using only functions.
+```cpp
+int introduction();
+int scoreCalculator(char**, char**, int);
+void showMines(char**, char**, int, int, int);
+int submit(char**, char**, int, int, int);
+void undoFlag(char**, int, int, int);
+void flagLocation(char**, int, int, int);
+void foundZero(int, int, char**, char**, int);
+int openLocation(char**, char**, int, int, int);
+void displayAnyBoard(char**, int);
+int countFlags(char**, int);
+int countMines(char**, int);
+void createDisplayBoard(char**, int);
+void createHints(int, int, char**, int);
+void createMines(char**, int, int);
+void createLogicBoard(char**, int);
+void initialBoard(char**, int);
+```
+The logic of the code is simple there is two-dimensional array of character used in the game board, but the unique thing here is that there are actually two boards in the play. One which show us the output the _`display-board`_. The other which contain the vlue of the locations which is hidden from us the _`logic-board`_. Whenever we try to perform any opertion like open or flag a location, the display-borad is the one which gets updated and it updates according to the value which is present at the same location in the logic-board.
 
+```cpp
+void main(){
+	clrscr();
+	int n, mcount, fcount, choice, lost=0, gameover=0, score, moves=0;
+	
+	n = introduction();
+	
+	char** logicBoard = new char*[n];
+	char** displayBoard = new char*[n];
+	for(int i=0; i<n; i++){
+		logicBoard[i] = new char[n];
+		displayBoard[i] = new char[n];
+	}
+	
+	initialBoard(logicBoard, n);
+	initialBoard(displayBoard, n);
+	
+	createLogicBoard(logicBoard, n);
+	createDisplayBoard(displayBoard, n);
+	
+	mcount = countMines(logicBoard, n);
+
+	while(!gameover && !lost){
+		clrscr();
+		fcount = countFlags(displayBoard, n);
+	
+		cout<<"\t\t\t\tM I N E S W E E P E R\n\n";
+		cout<<" Mines = "<<mcount<<"\t"<<" Flags = "<<fcount<<"\n";
+		displayAnyBoard(displayBoard, n);
+		cout<<"\n Press 1 to open a position\n Press 2 to Flag a position\n Press 3 to Undo Flag\n Press 4 to Submit\n\n CHOICE: ";
+		cin>>choice;
+		
+		switch(choice){
+			case 1:
+				lost = openLocation(logicBoard, displayBoard, n, mcount, fcount);
+				break;
+			case 2:
+				flagLocation(displayBoard, n, mcount, fcount);
+				break;
+			case 3:
+				undoFlag(displayBoard, n, mcount, fcount);
+				break;
+			case 4:
+				gameover = submit(logicBoard, displayBoard, n, mcount, fcount);
+				if(gameover == -1){
+					lost = 1;
+				}
+				moves--;
+				break;
+			default:
+				cout<<"\n\t\tEnter a valid Choice!!\n\t\tPress Enter to continue...";
+				getch();
+				break;
+		}
+		moves++;
+	}
+	
+	if(lost == 1){
+		score = scoreCalculator(logicBoard, displayBoard, n);
+		clrscr();
+		cout<<"\n\n\n\n\n\t\t\t\t  GAME OVER\n\n";
+		cout<<"\t\t\tThank you for playing the game\n\t\t\t\t  Moves: "<<moves<<"\n\t\t\t\tYou scored: "<<score<<"\n\n\t\t\t    Press Enter to Exit...";
+		getch();
+	}
+	if(gameover == 1){
+		score = scoreCalculator(logicBoard, displayBoard, n);
+		clrscr();
+		cout<<"\n\n\n\n\n\t\t\t\t  GAME OVER\n\n";
+		cout<<"\t\t\tCongrtulations!! You won the game\n\t\t\t\t  Moves: "<<moves<<"\n\t\t\t\tYou scored: "<<score<<"\n\n\t\t\t    Press Enter to Exit...";
+		getch();
+	}
+}
+```
 
 Back to [Table of contents](#table-of-contents)
 
